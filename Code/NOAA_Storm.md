@@ -17,7 +17,7 @@ The report seeks to address the following questions:
 1. Across the United States, which types of events are most harmful with respect to population health?
 2. Across the United States, which types of events have the greatest economic consequences?
 
-## Data 
+## Raw Data 
 This report analyzed the NOAA Storm Events Database which documents the occurrence of storms and other significant weather phenomena having sufficient intensity to cause loss of life, injuries, significant property damage, and/or disruption to commerce. The database currently contains data from January 1950 to November 2015, as entered by NOAA's National Weather Service (NWS), capturing fatalities, property damage, and crop damage for some 48 designated event types.
 
 ## Data Processing
@@ -60,7 +60,7 @@ library(downloader)
 ```
 
 ### Load Data
-This function downloads a zipped file from the web and stores it in the requested library. The function checks of the raw data directory exists, and creates it if it doesn't.  Next, the file is downloaded if the file doesn't exist, or the the file wasn't downloaded on the current day. Finally, we read the file into a data frame and return it to the master script.
+This function downloads a zipped file from the web and stores it in the designated directory.  The function checks of the raw data directory exists, and creates it if it doesn't.  Next, the file is downloaded if the file doesn't exist, or the the file wasn't downloaded on the current day. Finally, we read the file into a data frame and return it to the master script.
 
   * Args:
 
@@ -70,7 +70,7 @@ This function downloads a zipped file from the web and stores it in the requeste
     + CSV - the name of the csv file
     + df  - the name of thd data frame that contains the data
 
-  * Response: This function will load the file into a data frame and return it to the calling script
+  * Response: This function will load the storm data file into a data frame and return it to the calling script
 
 ```r
 loadData <- function(url, dir, zip, csv, df) {
@@ -144,7 +144,7 @@ if (review) {
 }
 ```
 
-There are **902297** observations in the original data file, each having **37** variables.  The data set contains **985** unique event types and **647664** rows have zero values for each of the variables being measured.
+There were **902297** observations in the original data file, each having **37** variables.  The data set contained **985** unique event types and **647664** rows have zero values for each of the variables being measured.
 
 
 ### Data Transformations
@@ -203,7 +203,7 @@ processEventType <- function(x) {
     x$EVTYPE[grep("flood|wet", x$EVTYPE)] = "Flood"
     x$EVTYPE[grep("freeze|cold|frost|low temp|freezing|hyperthermia|cool|ice|icy", 
         x$EVTYPE)] = "Frost/Freeze"
-    x$EVTYPE[grep("tornado|funnel|torndao|gustnado", x$EVTYPE)] = "Tornado"
+    x$EVTYPE[grep("tornado|funnel|torndao|gustnado", x$EVTYPE)] = "Tornados"
     x$EVTYPE[grep("freezing fog", x$EVTYPE)] = "Freezing Fog"
     x$EVTYPE[grep("hail", x$EVTYPE)] = "Hail"
     x$EVTYPE[grep("heavy rain|hvy rain|rain|precip|wet|shower", x$EVTYPE)] = "Heavy Rain"
@@ -233,7 +233,7 @@ processEventType <- function(x) {
     x$EVTYPE[grep("spout", x$EVTYPE)] = "Waterspout"
     x$EVTYPE[grep("wildfire|fire", x$EVTYPE)] = "Wildfire"
     x$EVTYPE[grep("winter weather|wintry|mix", x$EVTYPE)] = "Winter Weather"
-    x$EVTYPE[grep("storm", x$EVTYPE)] = "Winter Storm"
+    x$EVTYPE[grep("storm", x$EVTYPE)] = "Winter Storms"
     x$EVTYPE[grep("summary|glaze|//?|other|urban", x$EVTYPE)] = "Other"
     return(x)
 }
@@ -297,10 +297,10 @@ processYear <- function(x) {
 stormData <- processYear(stormData)
 ```
 
-## Data Analysis
-Health and economic impacts were evaluated from two perspective points of view. First, the health and economic effects were examined over the entire data set, by event type.  Next, time series plots were rendered to illuminate any trends over time. Finally, we observe impacts over a subset of the most recent data based upon any trends observed.
+### Data Analysis
+Health and economic impacts were evaluated from two perspectives. First, the health and economic effects were examined over the entire data set, by event type.  Next, time series plots were rendered to illuminate any trends over time. Finally, we observe impacts over a subset of the most recent data based upon any trends observed.
 
-### Top 5 Event Types
+#### Top 5 Event Types
 The following six functions calculate the top 5 event types, in terms of health and economic impact.
 
 ```r
@@ -353,24 +353,7 @@ top5PropDmg <- top5PropDmgFunc(stormData)
 top5TotalDmg <- top5TotalDmgFunc(stormData)
 ```
 
-Next, we select storm data published since 1980.
-
-```r
-stormData1990 <- stormData[which(stormData$YEAR >= "1990"), ]
-```
-
-Then we use the "top 5" functions to calculate top 5 event types, in terms of health and economic impact, for data published since 1980.
-
-```r
-top5Fatalities1990 <- top5FatalitiesFunc(stormData1990)
-top5Injuries1990 <- top5InjuriesFunc(stormData1990)
-top5Health1990 <- top5HealthFunc(stormData1990)
-top5CropDmg1990 <- top5CropDmgFunc(stormData1990)
-top5PropDmg1990 <- top5PropDmgFunc(stormData1990)
-top5TotalDmg1990 <- top5TotalDmgFunc(stormData1990)
-```
-
-Lastly, we calculate the time series data that will be used to reveal trends over time.
+Next, we calculate the time series data that will be used to reveal trends over time.
 
 ```r
 fatalitiesByYear <- stormData %>% group_by(YEAR, EVTYPE) %>% summarise(FATALITIES = sum(FATALITIES))
@@ -393,7 +376,25 @@ totalDmgByYear <- totalDmgByYear[which(totalDmgByYear$EVTYPE %in% top5TotalDmg$E
     ]
 ```
 
-### Presentation Functions
+Then, we select storm data published since 1990.
+
+```r
+stormData1990 <- stormData[which(stormData$YEAR >= "1990"), ]
+```
+
+Lastly, we use the "top 5" functions to calculate top 5 event types, in terms of health and economic impact, for data published since 1990.
+
+```r
+top5Fatalities1990 <- top5FatalitiesFunc(stormData1990)
+top5Injuries1990 <- top5InjuriesFunc(stormData1990)
+top5Health1990 <- top5HealthFunc(stormData1990)
+top5CropDmg1990 <- top5CropDmgFunc(stormData1990)
+top5PropDmg1990 <- top5PropDmgFunc(stormData1990)
+top5TotalDmg1990 <- top5TotalDmgFunc(stormData1990)
+```
+
+
+### Data Presentation
 The following section contains the functions and calls required to present the data graphically.  
 
 #### Bar Plot Functions
@@ -464,21 +465,21 @@ trendHealth <- function(x) {
     return(t)
 }
 trendPropDmg <- function(x) {
-    t <- ggplot(data = x, aes(x = as.numeric(x$YEAR), y = PROPDMG, group = EVTYPE, 
+    t <- ggplot(data = x, aes(x = as.numeric(x$YEAR), y = (PROPDMG/1000), group = EVTYPE, 
         colour = EVTYPE)) + geom_line() + labs(title = "Property Damage by Event Type ($000s)") + 
         labs(x = "Event Type") + labs(y = "Property Damage") + scale_colour_discrete(name = "Event Type") + 
         theme_bw()
     return(t)
 }
 trendCropDmg <- function(x) {
-    t <- ggplot(data = x, aes(x = as.numeric(x$YEAR), y = CROPDMG, group = EVTYPE, 
+    t <- ggplot(data = x, aes(x = as.numeric(x$YEAR), y = (CROPDMG/1000), group = EVTYPE, 
         colour = EVTYPE)) + geom_line() + labs(title = "Crop Damage by Event Type ($000s)") + 
         labs(x = "Event Type") + labs(y = "Crop Damage") + scale_colour_discrete(name = "Event Type") + 
         theme_bw()
     return(t)
 }
 trendTotalDmg <- function(x) {
-    t <- ggplot(data = x, aes(x = as.numeric(x$YEAR), y = TOTALDMG, group = EVTYPE, 
+    t <- ggplot(data = x, aes(x = as.numeric(x$YEAR), y = (TOTALDMG/1000), group = EVTYPE, 
         colour = EVTYPE)) + geom_line() + labs(title = "Total Damage by Event Type ($000s)") + 
         labs(x = "Event Type") + labs(y = "Total Damage") + scale_colour_discrete(name = "Event Type") + 
         theme_bw()
@@ -501,9 +502,19 @@ grid.arrange(b1, b2, b3, b4, b5, b6, ncol = 2, nrow = 3)
 ```
 
 ![](../figures/unnamed-chunk-21-1.png)<!-- -->
-Using the full data set as a source, it would appear that Tornados have the greatest public health and economic impact.
 
-However, the following line charts reveal several interesting points.
+### Health & Economic Impacts, 1950 to Present
+
+**Health Impacts**
+
+Based upon available data since 1950, it would appear that **Tornados** have the greatest public health impact.  Referring to the center-left red bar chart, total healthcare incidents (fatalities + injuries) for **Tornados** topped **97,071** fatalities and injuries since 1950 - **244** percent of the next 4 top events, combined.
+
+**Economic Impacts**
+
+Similarly, the red bar chart in the lower right corner shows **Tornados** as having the greatest overall economic impact.  Generating over **$33,160,824** of estimated economic cost, **Tornados** create **110** percent of the damage created by **Winter Storms**.
+
+### Time Series of Health & Economic Impacts
+The following time series plots depict the health and economic impacts over time for the top 5 events, as reported by NOAA.  
 
 ```r
 t1 <- trendFatalities(fatalitiesByYear)
@@ -516,9 +527,14 @@ grid.arrange(t1, t2, t3, t4, t5, t6, ncol = 2, nrow = 3)
 ```
 
 ![](../figures/unnamed-chunk-22-1.png)<!-- -->
-The charts reveal a lack of data for the period leading up to the 1990's.  After which, one can observe a wider range of weather events.  
+The data evinces several interesting inferences.
+1.  Data for the event types having the highest impact on health and economics, don't emerge until approximately 1990.
+2.  Starting in 1990's, extreme heat emerges as a leading cause of fatalities.
+3.  Winter storms seem to generate higher economic costs from 1990 forward.
 
-The following chart illucidates the health and economic impacts since 1980.  
+Given the stratification of the data over time, one might conclude that a closer look at the storm data from 1990 forward, might provide a more accurate assessment of the health and economic effects vis-a-vis storm events. 
+
+The following chart illucidates the health and economic impacts since 1990.  
 
 ```r
 b1 <- barPlotFatalities(top5Fatalities1990)
@@ -532,9 +548,16 @@ grid.arrange(b1, b2, b3, b4, b5, b6, ncol = 2, nrow = 3)
 
 ![](../figures/unnamed-chunk-23-1.png)<!-- -->
 
+### Health & Economic Impacts, 1990 to Present
 
+**Health Impacts**
 
-Using this data as source, 
+As with the data from 1950, **Tornados** seem to have the greatest overall impact on public health; however extreme heat emerges as the leading cause of storm related fatalities with **202** percent of the fatalities reported for **Tornados**
+
+**Economic Impacts**
+
+The data from 1990 forward presents a different economic impact assessment.  Here, **Winter Storms** emerge as the leading cause of storm related economic damage.  With an estimated **$30,050,877** in storm related economic costs, **Winter Storms** accounts for **78** percent greaterdamage than that created by **Tornados**.   
+
 
 
 ## References

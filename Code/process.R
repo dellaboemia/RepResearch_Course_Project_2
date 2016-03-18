@@ -40,7 +40,7 @@ processEventType <- function(x) {
   x$EVTYPE[grep("flash flood|dam|fld|stream|rapidly rising", x$EVTYPE)] = "Flash Flood"
   x$EVTYPE[grep("flood|wet", x$EVTYPE)] = "Flood"
   x$EVTYPE[grep("freeze|cold|frost|low temp|freezing|hyperthermia|cool|ice|icy", x$EVTYPE)] = "Frost/Freeze"
-  x$EVTYPE[grep("tornado|funnel|torndao|gustnado", x$EVTYPE)] = "Tornado"
+  x$EVTYPE[grep("tornado|funnel|torndao|gustnado", x$EVTYPE)] = "Tornados"
   x$EVTYPE[grep("freezing fog", x$EVTYPE)] = "Freezing Fog"
   x$EVTYPE[grep("hail", x$EVTYPE)] = "Hail"
   x$EVTYPE[grep("heavy rain|hvy rain|rain|precip|wet|shower", x$EVTYPE)] = "Heavy Rain"
@@ -70,7 +70,7 @@ processEventType <- function(x) {
   x$EVTYPE[grep("spout", x$EVTYPE)] = "Waterspout"
   x$EVTYPE[grep("wildfire|fire", x$EVTYPE)] = "Wildfire"
   x$EVTYPE[grep("winter weather|wintry|mix", x$EVTYPE)] = "Winter Weather"
-  x$EVTYPE[grep("storm", x$EVTYPE)] = "Winter Storm"
+  x$EVTYPE[grep("storm", x$EVTYPE)] = "Winter Storms"
   x$EVTYPE[grep("summary|glaze|//?|other|urban", x$EVTYPE)] = "Other"
   
   return(x)

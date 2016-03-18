@@ -7,6 +7,7 @@ output:
     fig_caption: yes
     fig_height: 12
     keep_md: yes
+    toc: yes
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
@@ -35,7 +36,7 @@ The report seeks to address the following questions:
 1. Across the United States, which types of events are most harmful with respect to population health?
 2. Across the United States, which types of events have the greatest economic consequences?
 
-## Data 
+## Raw Data 
 This report analyzed the NOAA Storm Events Database which documents the occurrence of storms and other significant weather phenomena having sufficient intensity to cause loss of life, injuries, significant property damage, and/or disruption to commerce. The database currently contains data from January 1950 to November 2015, as entered by NOAA's National Weather Service (NWS), capturing fatalities, property damage, and crop damage for some 48 designated event types.
 
 ## Data Processing
@@ -47,7 +48,7 @@ The following code configures the environment for the analysis.  Filenames are d
 ```
 
 ### Load Data
-This function downloads a zipped file from the web and stores it in the requested library. The function checks of the raw data directory exists, and creates it if it doesn't.  Next, the file is downloaded if the file doesn't exist, or the the file wasn't downloaded on the current day. Finally, we read the file into a data frame and return it to the master script.
+This function downloads a zipped file from the web and stores it in the designated directory.  The function checks of the raw data directory exists, and creates it if it doesn't.  Next, the file is downloaded if the file doesn't exist, or the the file wasn't downloaded on the current day. Finally, we read the file into a data frame and return it to the master script.
 
   * Args:
 
@@ -57,7 +58,7 @@ This function downloads a zipped file from the web and stores it in the requeste
     + CSV - the name of the csv file
     + df  - the name of thd data frame that contains the data
 
-  * Response: This function will load the file into a data frame and return it to the calling script
+  * Response: This function will load the storm data file into a data frame and return it to the calling script
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
 <<loadDataFunc>>
 ```
@@ -77,7 +78,7 @@ The following code provides the dimensions of the dataset, the number of unique 
 <<reviewData>>
 ```
 
-There are **`r observations`** observations in the original data file, each having **`r variables`** variables.  The data set contains **`r numEventTypes`** unique event types and **`r zeroRows`** rows have zero values for each of the variables being measured.
+There were **`r observations`** observations in the original data file, each having **`r variables`** variables.  The data set contained **`r numEventTypes`** unique event types and **`r zeroRows`** rows have zero values for each of the variables being measured.
 
 
 ### Data Transformations
@@ -142,10 +143,10 @@ The following function, along with its function call, creates a new categorical 
 <<processYearCall>>
 ```
 
-## Data Analysis
-Health and economic impacts were evaluated from two perspective points of view. First, the health and economic effects were examined over the entire data set, by event type.  Next, time series plots were rendered to illuminate any trends over time. Finally, we observe impacts over a subset of the most recent data based upon any trends observed.
+### Data Analysis
+Health and economic impacts were evaluated from two perspectives. First, the health and economic effects were examined over the entire data set, by event type.  Next, time series plots were rendered to illuminate any trends over time. Finally, we observe impacts over a subset of the most recent data based upon any trends observed.
 
-### Top 5 Event Types
+#### Top 5 Event Types
 The following six functions calculate the top 5 event types, in terms of health and economic impact.
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
 <<analysisFunc>>
@@ -156,22 +157,23 @@ The above functions are called to calculated top 5 event types in terms of healt
 <<top5AllData>>
 ```
 
-Next, we select storm data published since 1980.
-```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
-<<extract1990Data>>
-```
-
-Then we use the "top 5" functions to calculate top 5 event types, in terms of health and economic impact, for data published since 1980.
-```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
-<<top51990>>
-```
-
-Lastly, we calculate the time series data that will be used to reveal trends over time.
+Next, we calculate the time series data that will be used to reveal trends over time.
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
 <<timeSeriesData>>
 ```
 
-### Presentation Functions
+Then, we select storm data published since 1990.
+```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
+<<extract1990Data>>
+```
+
+Lastly, we use the "top 5" functions to calculate top 5 event types, in terms of health and economic impact, for data published since 1990.
+```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
+<<top51990>>
+```
+
+
+### Data Presentation
 The following section contains the functions and calls required to present the data graphically.  
 
 #### Bar Plot Functions
@@ -192,22 +194,53 @@ The following code renders a group of bar plots, showing the health and economic
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
 <<top5BarPlotsAll>>
 ```
-Using the full data set as a source, it would appear that Tornados have the greatest public health and economic impact.
 
-However, the following line charts reveal several interesting points.
+### Health & Economic Impacts, 1950 to Present
+
+**Health Impacts**
+
+Based upon available data since 1950, it would appear that **`r top5Health[1,1]`** have the greatest public health impact.  Referring to the center-left red bar chart, total healthcare incidents (fatalities + injuries) for **`r top5Health[1,1]`** topped **`r paste(format(top5Health[1,2],big.mark=","), sep="")`** fatalities and injuries since 1950 - **`r round(100* top5Health[1,2]/(top5Health[2,2] + top5Health[3,2] + top5Health[4,2] + top5Health[5,2]), digits=0)`** percent of the next 4 top events, combined.
+
+**Economic Impacts**
+
+Similarly, the red bar chart in the lower right corner shows **`r top5TotalDmg[1,1]`** as having the greatest overall economic impact.  Generating over **`r paste("$",format(round(top5TotalDmg[1,2], digits=0),big.mark=","),sep="")`** of estimated economic cost, **`r top5TotalDmg[1,1]`** create **`r (round(100*top5TotalDmg[1,2]/top5TotalDmg[2,2]))`** percent of the damage created by **`r top5TotalDmg[2,1]`**.
+
+### Time Series of Health & Economic Impacts
+The following time series plots depict the health and economic impacts over time for the top 5 events, as reported by NOAA.  
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
 <<trendLine>>
 ```
-The charts reveal a lack of data for the period leading up to the 1990's.  After which, one can observe a wider range of weather events.  
+The data evinces several interesting inferences.
+1.  Data for the event types having the highest impact on health and economics, don't emerge until approximately 1990.
+2.  Starting in 1990's, extreme heat emerges as a leading cause of fatalities.
+3.  Winter storms seem to generate higher economic costs from 1990 forward.
 
-The following chart illucidates the health and economic impacts since 1980.  
+Given the stratification of the data over time, one might conclude that a closer look at the storm data from 1990 forward, might provide a more accurate assessment of the health and economic effects vis-a-vis storm events. 
+
+The following chart illucidates the health and economic impacts since 1990.  
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
 <<top5BarPlots1990>>
 ```
 
+### Health & Economic Impacts, 1990 to Present
+
+**Health Impacts**
+
+As with the data from 1950, **`r top5Health1990[1,1]`** seem to have the greatest overall impact on public health; however, **`r top5Fatalities1990[2,1]`** emerges as the leading cause of storm related fatalities with **`r round(100* top5Fatalities1990[1,2]/top5Fatalities1990[2,2])`** percent of the fatalities reported for **`r top5Fatalities1990[2,1]`**
+
+**Economic Impacts**
+
+The data from 1990 forward presents a different economic impact assessment.  Here, **`r top5TotalDmg1990[1,1]`** emerge as the leading cause of storm related economic damage.  With an estimated **`r paste("$",format(round(top5TotalDmg1990[1,2], digits=0),big.mark=","),sep="")`** in storm related economic costs, **`r top5TotalDmg1990[1,1]`** account for **`r (round(100*top5TotalDmg1990[1,2]/top5TotalDmg1990[2,2]))-100`** percent greater damage than that created by **`r top5TotalDmg1990[2,1]`**.   
+
+## Conclusion
+
+Storms and other severe weather events exact public health and economic costs and the prevention or control of such costs, is a key priority.  The purpose of this study was to ascertain which types of weather events are most harmful to public health, and which events caused the greatest economic consequences.  An exploration and analysis of the NOAA Storm Database was conducted to determine which storm weather events generated the highest public health and economic costs.  Given the stratification of the data, observations of events occurring from 1990 to 2011 formed the basis of the analysis and the conclusions.  
+
+From a public health perspective, **`r top5Health1990[1,1]`** generate the highest number of health incidents; whereas, **`r top5Fatalities1990[1,1]`** is responsible for the greatest number of weather & storm related fatalities.  From an economic standpoint, **`r top5TotalDmg1990[1,1]`** emerges as the most costly weather events.
+
+The purpose of this study of which is  can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.
 
 
-Using this data as source, 
 
 
 ## References

@@ -117,7 +117,7 @@ trendHealth <- function(x) {
 
 
 trendPropDmg <- function(x) {
-  t <- ggplot(data=x, aes(x=as.numeric(x$YEAR), y=PROPDMG, group=EVTYPE, colour=EVTYPE)) +
+  t <- ggplot(data=x, aes(x=as.numeric(x$YEAR), y=(PROPDMG/1000), group=EVTYPE, colour=EVTYPE)) +
     geom_line() +
     labs(title = "Property Damage by Event Type ($000s)") +
     labs(x = "Event Type") +
@@ -130,7 +130,7 @@ trendPropDmg <- function(x) {
 
 
 trendCropDmg <- function(x) {
-  t <- ggplot(data=x, aes(x=as.numeric(x$YEAR), y=CROPDMG, group=EVTYPE, colour=EVTYPE)) +
+  t <- ggplot(data=x, aes(x=as.numeric(x$YEAR), y=(CROPDMG/1000), group=EVTYPE, colour=EVTYPE)) +
     geom_line() +
     labs(title = "Crop Damage by Event Type ($000s)") +
     labs(x = "Event Type") +
@@ -143,7 +143,7 @@ trendCropDmg <- function(x) {
 
 
 trendTotalDmg <- function(x) {
-  t <- ggplot(data=x, aes(x=as.numeric(x$YEAR), y=TOTALDMG, group=EVTYPE, colour=EVTYPE)) +
+  t <- ggplot(data=x, aes(x=as.numeric(x$YEAR), y=(TOTALDMG/1000), group=EVTYPE, colour=EVTYPE)) +
     geom_line() +
     labs(title = "Total Damage by Event Type ($000s)") +
     labs(x = "Event Type") +
