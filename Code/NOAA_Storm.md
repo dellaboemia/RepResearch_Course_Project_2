@@ -356,18 +356,18 @@ top5TotalDmg <- top5TotalDmgFunc(stormData)
 Next, we select storm data published since 1980.
 
 ```r
-stormData1980 <- stormData[which(stormData$YEAR >= "1980"), ]
+stormData1990 <- stormData[which(stormData$YEAR >= "1990"), ]
 ```
 
 Then we use the "top 5" functions to calculate top 5 event types, in terms of health and economic impact, for data published since 1980.
 
 ```r
-top5Fatalities1980 <- top5FatalitiesFunc(stormData1980)
-top5Injuries1980 <- top5InjuriesFunc(stormData1980)
-top5Health1980 <- top5HealthFunc(stormData1980)
-top5CropDmg1980 <- top5CropDmgFunc(stormData1980)
-top5PropDmg1980 <- top5PropDmgFunc(stormData1980)
-top5TotalDmg1980 <- top5TotalDmgFunc(stormData1980)
+top5Fatalities1990 <- top5FatalitiesFunc(stormData1990)
+top5Injuries1990 <- top5InjuriesFunc(stormData1990)
+top5Health1990 <- top5HealthFunc(stormData1990)
+top5CropDmg1990 <- top5CropDmgFunc(stormData1990)
+top5PropDmg1990 <- top5PropDmgFunc(stormData1990)
+top5TotalDmg1990 <- top5TotalDmgFunc(stormData1990)
 ```
 
 Lastly, we calculate the time series data that will be used to reveal trends over time.
@@ -500,7 +500,7 @@ b6 <- barPlotTotalDamage(top5TotalDmg)
 grid.arrange(b1, b2, b3, b4, b5, b6, ncol = 2, nrow = 3)
 ```
 
-![](figures/unnamed-chunk-21-1.png)<!-- -->
+![](../figures/unnamed-chunk-21-1.png)<!-- -->
 Using the full data set as a source, it would appear that Tornados have the greatest public health and economic impact.
 
 However, the following line charts reveal several interesting points.
@@ -515,22 +515,22 @@ t6 <- trendTotalDmg(totalDmgByYear)
 grid.arrange(t1, t2, t3, t4, t5, t6, ncol = 2, nrow = 3)
 ```
 
-![](figures/unnamed-chunk-22-1.png)<!-- -->
-The charts reveal a lack of data for the period leading up to the 1980's.  After which, one can observe a wider range of weather events.  
+![](../figures/unnamed-chunk-22-1.png)<!-- -->
+The charts reveal a lack of data for the period leading up to the 1990's.  After which, one can observe a wider range of weather events.  
 
 The following chart illucidates the health and economic impacts since 1980.  
 
 ```r
-b1 <- barPlotFatalities(top5Fatalities1980)
-b2 <- barPlotInjuries(top5Injuries1980)
-b3 <- barPlotHealthIncidents(top5Health1980)
-b4 <- barPlotPropertyDamage(top5PropDmg1980)
-b5 <- barPlotCropDamage(top5CropDmg1980)
-b6 <- barPlotTotalDamage(top5TotalDmg1980)
+b1 <- barPlotFatalities(top5Fatalities1990)
+b2 <- barPlotInjuries(top5Injuries1990)
+b3 <- barPlotHealthIncidents(top5Health1990)
+b4 <- barPlotPropertyDamage(top5PropDmg1990)
+b5 <- barPlotCropDamage(top5CropDmg1990)
+b6 <- barPlotTotalDamage(top5TotalDmg1990)
 grid.arrange(b1, b2, b3, b4, b5, b6, ncol = 2, nrow = 3)
 ```
 
-![](figures/unnamed-chunk-23-1.png)<!-- -->
+![](../figures/unnamed-chunk-23-1.png)<!-- -->
 
 
 

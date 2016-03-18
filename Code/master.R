@@ -126,17 +126,17 @@ library(downloader)
     top5TotalDmg    <- top5TotalDmgFunc(stormData)
 ## ---- end
     
-## ---- extract1980Data
-    stormData1980 <- stormData[ which(stormData$YEAR >= "1980"),]
+## ---- extract1990Data
+    stormData1990 <- stormData[ which(stormData$YEAR >= "1990"),]
 ## ---- end
     
-## ---- top51980
-    top5Fatalities1980  <- top5FatalitiesFunc(stormData1980)
-    top5Injuries1980    <- top5InjuriesFunc(stormData1980)
-    top5Health1980      <- top5HealthFunc(stormData1980)
-    top5CropDmg1980     <- top5CropDmgFunc(stormData1980)
-    top5PropDmg1980     <- top5PropDmgFunc(stormData1980)
-    top5TotalDmg1980    <- top5TotalDmgFunc(stormData1980)
+## ---- top51990
+    top5Fatalities1990  <- top5FatalitiesFunc(stormData1990)
+    top5Injuries1990    <- top5InjuriesFunc(stormData1990)
+    top5Health1990      <- top5HealthFunc(stormData1990)
+    top5CropDmg1990     <- top5CropDmgFunc(stormData1990)
+    top5PropDmg1990     <- top5PropDmgFunc(stormData1990)
+    top5TotalDmg1990    <- top5TotalDmgFunc(stormData1990)
 ## ---- end
   
 ## ---- timeSeriesData
@@ -179,13 +179,13 @@ library(downloader)
     grid.arrange(b1, b2, b3, b4, b5, b6, ncol=2, nrow=3)    
 ## ---- end
     
-## ---- top5BarPlots1980
-    b1 <- barPlotFatalities(top5Fatalities1980)
-    b2 <- barPlotInjuries(top5Injuries1980)
-    b3 <- barPlotHealthIncidents(top5Health1980)
-    b4 <- barPlotPropertyDamage(top5PropDmg1980)
-    b5 <- barPlotCropDamage(top5CropDmg1980)
-    b6 <- barPlotTotalDamage(top5TotalDmg1980)
+## ---- top5BarPlots1990
+    b1 <- barPlotFatalities(top5Fatalities1990)
+    b2 <- barPlotInjuries(top5Injuries1990)
+    b3 <- barPlotHealthIncidents(top5Health1990)
+    b4 <- barPlotPropertyDamage(top5PropDmg1990)
+    b5 <- barPlotCropDamage(top5CropDmg1990)
+    b6 <- barPlotTotalDamage(top5TotalDmg1990)
     
     grid.arrange(b1, b2, b3, b4, b5, b6, ncol=2, nrow=3)    
 ## ---- end    

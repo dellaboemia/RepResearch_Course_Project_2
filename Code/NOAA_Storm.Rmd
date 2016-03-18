@@ -19,7 +19,7 @@ read_chunk("process.R")
 read_chunk("analyze.R")
 read_chunk("present.R")
 knitr::opts_knit$set(root.dir = 'C:/Users/John/Documents/GitHub/RepResearch_Course_Project_2')
-knitr::opts_chunk$set(fig.width=12, fig.height=16, fig.path = "figures/", echo=TRUE, warning=FALSE)
+knitr::opts_chunk$set(fig.width=12, fig.height=16, fig.path = "../figures/", echo=TRUE, warning=FALSE)
 ```
 
 ## Synopsis
@@ -158,12 +158,12 @@ The above functions are called to calculated top 5 event types in terms of healt
 
 Next, we select storm data published since 1980.
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
-<<extract1980Data>>
+<<extract1990Data>>
 ```
 
 Then we use the "top 5" functions to calculate top 5 event types, in terms of health and economic impact, for data published since 1980.
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
-<<top51980>>
+<<top51990>>
 ```
 
 Lastly, we calculate the time series data that will be used to reveal trends over time.
@@ -198,11 +198,11 @@ However, the following line charts reveal several interesting points.
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
 <<trendLine>>
 ```
-The charts reveal a lack of data for the period leading up to the 1980's.  After which, one can observe a wider range of weather events.  
+The charts reveal a lack of data for the period leading up to the 1990's.  After which, one can observe a wider range of weather events.  
 
 The following chart illucidates the health and economic impacts since 1980.  
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
-<<top5BarPlots1980>>
+<<top5BarPlots1990>>
 ```
 
 
