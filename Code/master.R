@@ -16,7 +16,7 @@
   review  <- TRUE
   process <- TRUE
   analyze <- TRUE
-  present <- FALSE
+  present <- TRUE
  
 # Raw Data File Parameters
   dataUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"   # Link to data source
@@ -165,12 +165,10 @@ library(downloader)
 #############################################################################
 ##                              PRESENT DATA                               ##
 #############################################################################
-# ---- presentData  
 
   if (present) {
-    message("Presenting data...")
-    
-    # Present all data
+
+## ---- top5BarPlotsAll
     b1 <- barPlotFatalities(top5Fatalities)
     b2 <- barPlotInjuries(top5Injuries)
     b3 <- barPlotHealthIncidents(top5Health)
@@ -179,9 +177,9 @@ library(downloader)
     b6 <- barPlotTotalDamage(top5TotalDmg)
     
     grid.arrange(b1, b2, b3, b4, b5, b6, ncol=2, nrow=3)    
-
+## ---- end
     
-    # Present data since 1980
+## ---- top5BarPlots1980
     b1 <- barPlotFatalities(top5Fatalities1980)
     b2 <- barPlotInjuries(top5Injuries1980)
     b3 <- barPlotHealthIncidents(top5Health1980)
@@ -190,37 +188,17 @@ library(downloader)
     b6 <- barPlotTotalDamage(top5TotalDmg1980)
     
     grid.arrange(b1, b2, b3, b4, b5, b6, ncol=2, nrow=3)    
-    
+## ---- end    
 
-    # Present data since 2000
-    b1 <- barPlotFatalities(top5Fatalities2000)
-    b2 <- barPlotInjuries(top5Injuries2000)
-    b3 <- barPlotHealthIncidents(top5Health2000)
-    b4 <- barPlotPropertyDamage(top5PropDmg2000)
-    b5 <- barPlotCropDamage(top5CropDmg2000)
-    b6 <- barPlotTotalDamage(top5TotalDmg2000)
-    
-    grid.arrange(b1, b2, b3, b4, b5, b6, ncol=2, nrow=3)    
-    
-
-    # Present trend lines
+## ---- trendLine
     t1 <- trendFatalities(fatalitiesByYear)
     t2 <- trendInjuries(injuriesByYear)
     t3 <- trendHealth(healthIncidentsByYear)
     t4 <- trendPropDmg(propDmgByYear)
     t5 <- trendCropDmg(cropDmgByYear)
     t6 <- trendTotalDmg(totalDmgByYear)
-    print(t1)
-    print(t2)
-    print(t3)
-    print(t4)
-    print(t5)
-    print(t6)
 
     grid.arrange(t1, t2, t3, t4, t5, t6, ncol=2, nrow=3)    
+## ---- end
     
 }
-
-# ---- end presentData
-  
-    

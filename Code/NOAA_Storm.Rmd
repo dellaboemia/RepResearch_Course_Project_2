@@ -187,10 +187,29 @@ The following functions are used to render line charts of the top 5 event types,
 ```
 
 ## Results
+The following code renders a group of bar plots, showing the health and economic impacts for storm data from 1950.
+
+```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
+<<top5BarPlotsAll>>
+```
+Using the full data set as a source, it would appear that Tornados have the greatest public health and economic impact.
+
+However, the following line charts reveal several interesting points.
+```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
+<<trendLine>>
+```
+The charts reveal a lack of data for the period leading up to the 1980's.  After which, one can observe a wider range of weather events.  
+
+The following chart illucidates the health and economic impacts since 1980.  
+```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
+<<top5BarPlots1980>>
+```
+
+
+
+Using this data as source, 
+
 
 ## References
 (NOAA), U. N. (2016, March 8). NOAA Storm Database. Retrieved from NOAA National Centers for Environmental Information: https://www.ncdc.noaa.gov/stormevents/
-
-
-### Load Data
 

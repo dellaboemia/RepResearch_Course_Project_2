@@ -31,7 +31,7 @@ load <- TRUE
 review <- TRUE
 process <- TRUE
 analyze <- TRUE
-present <- FALSE
+present <- TRUE
 
 # Raw Data File Parameters
 dataUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"  # Link to data source
@@ -487,10 +487,56 @@ trendTotalDmg <- function(x) {
 ```
 
 ## Results
+The following code renders a group of bar plots, showing the health and economic impacts for storm data from 1950.
+
+
+```r
+b1 <- barPlotFatalities(top5Fatalities)
+b2 <- barPlotInjuries(top5Injuries)
+b3 <- barPlotHealthIncidents(top5Health)
+b4 <- barPlotPropertyDamage(top5PropDmg)
+b5 <- barPlotCropDamage(top5CropDmg)
+b6 <- barPlotTotalDamage(top5TotalDmg)
+grid.arrange(b1, b2, b3, b4, b5, b6, ncol = 2, nrow = 3)
+```
+
+![](figures/unnamed-chunk-21-1.png)<!-- -->
+Using the full data set as a source, it would appear that Tornados have the greatest public health and economic impact.
+
+However, the following line charts reveal several interesting points.
+
+```r
+t1 <- trendFatalities(fatalitiesByYear)
+t2 <- trendInjuries(injuriesByYear)
+t3 <- trendHealth(healthIncidentsByYear)
+t4 <- trendPropDmg(propDmgByYear)
+t5 <- trendCropDmg(cropDmgByYear)
+t6 <- trendTotalDmg(totalDmgByYear)
+grid.arrange(t1, t2, t3, t4, t5, t6, ncol = 2, nrow = 3)
+```
+
+![](figures/unnamed-chunk-22-1.png)<!-- -->
+The charts reveal a lack of data for the period leading up to the 1980's.  After which, one can observe a wider range of weather events.  
+
+The following chart illucidates the health and economic impacts since 1980.  
+
+```r
+b1 <- barPlotFatalities(top5Fatalities1980)
+b2 <- barPlotInjuries(top5Injuries1980)
+b3 <- barPlotHealthIncidents(top5Health1980)
+b4 <- barPlotPropertyDamage(top5PropDmg1980)
+b5 <- barPlotCropDamage(top5CropDmg1980)
+b6 <- barPlotTotalDamage(top5TotalDmg1980)
+grid.arrange(b1, b2, b3, b4, b5, b6, ncol = 2, nrow = 3)
+```
+
+![](figures/unnamed-chunk-23-1.png)<!-- -->
+
+
+
+Using this data as source, 
+
 
 ## References
 (NOAA), U. N. (2016, March 8). NOAA Storm Database. Retrieved from NOAA National Centers for Environmental Information: https://www.ncdc.noaa.gov/stormevents/
-
-
-### Load Data
 
