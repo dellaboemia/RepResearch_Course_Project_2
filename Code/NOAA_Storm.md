@@ -1,15 +1,12 @@
 # Public Health and Economic Impact of Hydro-Meteorological Events (Storms)
 John James  
-March 6, 2016  
+March 18, 2016  
 
 
 
 ## Synopsis
 
-## Introduction
-Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.
-
-The purpose of this project was to explore and analyze the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database to determine which types of hydro-meteorological events posed the greatest public health and economic cost.
+Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.  The purpose of this project was to explore and analyze the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database to determine which types of hydro-meteorological events posed the greatest public health and economic cost.  **Tornados** initially emerged as the top driver of public health and economic problems; however, a subsequent analysis of events over time revealed a significant lack of data for the other leading event types for the period ranging from 1950 to approximately 1990.  As such, the analysis was based upon the data from 1990 to 2011.  From a public health perspective, **tornados** have generated the highest number of health incidents; however, **excessive heat** was responsible for the greatest number of weather & storm related fatalities.  From an economic standpoint, **winter storms** emerged as the most costly of the weather events.
 
 ## Research Question
 The report seeks to address the following questions:
@@ -144,7 +141,7 @@ if (review) {
 }
 ```
 
-There were **902297** observations in the original data file, each having **37** variables.  The data set contained **985** unique event types and **647664** rows have zero values for each of the variables being measured.
+There were **902,297** observations in the original data file, each having **37** variables.  The data set contained **985** unique event types and **647,664** rows have zero values for each of the variables being measured.
 
 
 ### Data Transformations
@@ -245,7 +242,7 @@ stormData <- processEventType(stormData)
 ```
 
 #### Property & Crop Damage
-The following function along with its function call, converts the property and crop damage estimates to dollar values. PROPDMGEXP and CROPDMGEXP contain the base ten exponent by which the property and crop damage estimates must be multiplied to reflect dollar terms.  Lastly, two new variables are created: one to hold the sum of fatalities & injuries and the second contains total damage which is the sum of property and crop damage estimates.
+The following function along with its function call, converts the property and crop damage estimates to dollar values. PROPDMGEXP and CROPDMGEXP contain the base ten exponent by which the property and crop damage estimates must be multiplied to reflect dollar terms.  Lastly, two new variables are created: one (TOTALHEALTH) to hold the sum of fatalities & injuries and the second (TOTALDMG) contains total damage which is the sum of property and crop damage estimates.
 
 
 ```r
@@ -280,7 +277,7 @@ stormData <- processDamage(stormData)
 ```
 
 #### Year
-The following function, along with its function call, creates a new categorical variable that is equal to the year in which the event occurred.  This factor will be used to analyze health and economic impacts over time.
+The following function, along with its function call, creates a new categorical variable that is equal to the year in which the event occurred.  This factor will be used to analyze health and economic impact trends over time.
 
 
 
@@ -395,7 +392,7 @@ top5TotalDmg1990 <- top5TotalDmgFunc(stormData1990)
 
 
 ### Data Presentation
-The following section contains the functions and calls required to present the data graphically.  
+The following section contains the functions and calls required to present the graphical data.  
 
 #### Bar Plot Functions
 The following functions are used to render bar plots of the top 5 event types, in terms of health and economic impact.
@@ -528,11 +525,12 @@ grid.arrange(t1, t2, t3, t4, t5, t6, ncol = 2, nrow = 3)
 
 ![](../figures/unnamed-chunk-22-1.png)<!-- -->
 The data evinces several interesting inferences.
-1.  Data for the event types having the highest impact on health and economics, don't emerge until approximately 1990.
-2.  Starting in 1990's, extreme heat emerges as a leading cause of fatalities.
-3.  Winter storms seem to generate higher economic costs from 1990 forward.
 
-Given the stratification of the data over time, one might conclude that a closer look at the storm data from 1990 forward, might provide a more accurate assessment of the health and economic effects vis-a-vis storm events. 
+1. Data for the event types having the highest impact on health and economics, don't emerge until approximately 1990.
+2. Starting in 1990's, extreme heat emerges as a leading cause of fatalities.
+3. Winter storms seem to generate higher economic costs from 1990 forward.
+
+Given the stratification of the data over time, a closer look at the storm data from 1990 forward, might provide a more accurate assessment of the health and economic effects vis-a-vis storm events. 
 
 The following chart illucidates the health and economic impacts since 1990.  
 
@@ -552,13 +550,11 @@ grid.arrange(b1, b2, b3, b4, b5, b6, ncol = 2, nrow = 3)
 
 **Health Impacts**
 
-As with the data from 1950, **Tornados** seem to have the greatest overall impact on public health; however extreme heat emerges as the leading cause of storm related fatalities with **202** percent of the fatalities reported for **Tornados**
+As with the data from 1950, **Tornados** seem to have the greatest overall impact on public health; however, **Tornados** emerges as the leading cause of storm related fatalities with **202** percent of the fatalities reported for **Tornados**, the second highest weather related cause of fatalities.
 
 **Economic Impacts**
 
-The data from 1990 forward presents a different economic impact assessment.  Here, **Winter Storms** emerge as the leading cause of storm related economic damage.  With an estimated **$30,050,877** in storm related economic costs, **Winter Storms** accounts for **78** percent greaterdamage than that created by **Tornados**.   
-
-
+The data from 1990 forward presents a different economic impact assessment.  Here, **Winter Storms** emerge as the leading cause of storm related economic damage.  With an estimated **$30,050,877** in storm related economic costs, **Winter Storms** account for **78** percent greater damage than that created by **Tornados**.   
 
 ## References
 (NOAA), U. N. (2016, March 8). NOAA Storm Database. Retrieved from NOAA National Centers for Environmental Information: https://www.ncdc.noaa.gov/stormevents/

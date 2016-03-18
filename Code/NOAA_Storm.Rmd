@@ -1,7 +1,7 @@
 ---
 title: "Public Health and Economic Impact of Hydro-Meteorological Events (Storms)"
 author: "John James"
-date: "March 6, 2016"
+date: "March 18, 2016"
 output: 
   html_document: 
     fig_caption: yes
@@ -25,10 +25,7 @@ knitr::opts_chunk$set(fig.width=12, fig.height=16, fig.path = "../figures/", ech
 
 ## Synopsis
 
-## Introduction
-Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.
-
-The purpose of this project was to explore and analyze the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database to determine which types of hydro-meteorological events posed the greatest public health and economic cost.
+Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.  The purpose of this project was to explore and analyze the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database to determine which types of hydro-meteorological events posed the greatest public health and economic cost.  **Tornados** initially emerged as the top driver of public health and economic problems; however, a subsequent analysis of events over time revealed a significant lack of data for the other leading event types for the period ranging from 1950 to approximately 1990.  As such, the analysis was based upon the data from 1990 to 2011.  From a public health perspective, **tornados** have generated the highest number of health incidents; however, **excessive heat** was responsible for the greatest number of weather & storm related fatalities.  From an economic standpoint, **winter storms** emerged as the most costly of the weather events.
 
 ## Research Question
 The report seeks to address the following questions:
@@ -78,7 +75,7 @@ The following code provides the dimensions of the dataset, the number of unique 
 <<reviewData>>
 ```
 
-There were **`r observations`** observations in the original data file, each having **`r variables`** variables.  The data set contained **`r numEventTypes`** unique event types and **`r zeroRows`** rows have zero values for each of the variables being measured.
+There were **`r format(observations, big.mark=",")`** observations in the original data file, each having **`r variables`** variables.  The data set contained **`r numEventTypes`** unique event types and **`r format(zeroRows,big.mark=",")`** rows have zero values for each of the variables being measured.
 
 
 ### Data Transformations
@@ -121,7 +118,7 @@ There were 48 designated event types; however, there were 985 different factor l
 ```
 
 #### Property & Crop Damage
-The following function along with its function call, converts the property and crop damage estimates to dollar values. PROPDMGEXP and CROPDMGEXP contain the base ten exponent by which the property and crop damage estimates must be multiplied to reflect dollar terms.  Lastly, two new variables are created: one to hold the sum of fatalities & injuries and the second contains total damage which is the sum of property and crop damage estimates.
+The following function along with its function call, converts the property and crop damage estimates to dollar values. PROPDMGEXP and CROPDMGEXP contain the base ten exponent by which the property and crop damage estimates must be multiplied to reflect dollar terms.  Lastly, two new variables are created: one (TOTALHEALTH) to hold the sum of fatalities & injuries and the second (TOTALDMG) contains total damage which is the sum of property and crop damage estimates.
 
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
 <<processDamageFunc>>
@@ -132,7 +129,7 @@ The following function along with its function call, converts the property and c
 ```
 
 #### Year
-The following function, along with its function call, creates a new categorical variable that is equal to the year in which the event occurred.  This factor will be used to analyze health and economic impacts over time.
+The following function, along with its function call, creates a new categorical variable that is equal to the year in which the event occurred.  This factor will be used to analyze health and economic impact trends over time.
 
 
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
@@ -174,7 +171,7 @@ Lastly, we use the "top 5" functions to calculate top 5 event types, in terms of
 
 
 ### Data Presentation
-The following section contains the functions and calls required to present the data graphically.  
+The following section contains the functions and calls required to present the graphical data.  
 
 #### Bar Plot Functions
 The following functions are used to render bar plots of the top 5 event types, in terms of health and economic impact.
@@ -211,11 +208,12 @@ The following time series plots depict the health and economic impacts over time
 <<trendLine>>
 ```
 The data evinces several interesting inferences.
-1.  Data for the event types having the highest impact on health and economics, don't emerge until approximately 1990.
-2.  Starting in 1990's, extreme heat emerges as a leading cause of fatalities.
-3.  Winter storms seem to generate higher economic costs from 1990 forward.
 
-Given the stratification of the data over time, one might conclude that a closer look at the storm data from 1990 forward, might provide a more accurate assessment of the health and economic effects vis-a-vis storm events. 
+1. Data for the event types having the highest impact on health and economics, don't emerge until approximately 1990.
+2. Starting in 1990's, extreme heat emerges as a leading cause of fatalities.
+3. Winter storms seem to generate higher economic costs from 1990 forward.
+
+Given the stratification of the data over time, a closer look at the storm data from 1990 forward, might provide a more accurate assessment of the health and economic effects vis-a-vis storm events. 
 
 The following chart illucidates the health and economic impacts since 1990.  
 ```{r echo = TRUE, message = F, eval = T, tidy=TRUE, tidy.opts=list(comment=FALSE)}
@@ -226,22 +224,11 @@ The following chart illucidates the health and economic impacts since 1990.
 
 **Health Impacts**
 
-As with the data from 1950, **`r top5Health1990[1,1]`** seem to have the greatest overall impact on public health; however, **`r top5Fatalities1990[2,1]`** emerges as the leading cause of storm related fatalities with **`r round(100* top5Fatalities1990[1,2]/top5Fatalities1990[2,2])`** percent of the fatalities reported for **`r top5Fatalities1990[2,1]`**
+As with the data from 1950, **`r top5Health1990[1,1]`** seem to have the greatest overall impact on public health; however, **`r top5Fatalities1990[2,1]`** emerges as the leading cause of storm related fatalities with **`r round(100* top5Fatalities1990[1,2]/top5Fatalities1990[2,2])`** percent of the fatalities reported for **`r top5Fatalities1990[2,1]`**, the second highest weather related cause of fatalities.
 
 **Economic Impacts**
 
 The data from 1990 forward presents a different economic impact assessment.  Here, **`r top5TotalDmg1990[1,1]`** emerge as the leading cause of storm related economic damage.  With an estimated **`r paste("$",format(round(top5TotalDmg1990[1,2], digits=0),big.mark=","),sep="")`** in storm related economic costs, **`r top5TotalDmg1990[1,1]`** account for **`r (round(100*top5TotalDmg1990[1,2]/top5TotalDmg1990[2,2]))-100`** percent greater damage than that created by **`r top5TotalDmg1990[2,1]`**.   
-
-## Conclusion
-
-Storms and other severe weather events exact public health and economic costs and the prevention or control of such costs, is a key priority.  The purpose of this study was to ascertain which types of weather events are most harmful to public health, and which events caused the greatest economic consequences.  An exploration and analysis of the NOAA Storm Database was conducted to determine which storm weather events generated the highest public health and economic costs.  Given the stratification of the data, observations of events occurring from 1990 to 2011 formed the basis of the analysis and the conclusions.  
-
-From a public health perspective, **`r top5Health1990[1,1]`** generate the highest number of health incidents; whereas, **`r top5Fatalities1990[1,1]`** is responsible for the greatest number of weather & storm related fatalities.  From an economic standpoint, **`r top5TotalDmg1990[1,1]`** emerges as the most costly weather events.
-
-The purpose of this study of which is  can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.
-
-
-
 
 ## References
 (NOAA), U. N. (2016, March 8). NOAA Storm Database. Retrieved from NOAA National Centers for Environmental Information: https://www.ncdc.noaa.gov/stormevents/
