@@ -102,3 +102,12 @@ top5TotalDmgFunc <- function(x) {
 
 }
 ## ---- end
+
+
+# ---- calcDistributionFunc
+calcDistribution <- function(x) {
+  x <- x[x$YEAR<1990,]
+  return(table(x$EVTYPE))
+}
+  
+# ----#

@@ -6,7 +6,7 @@ March 18, 2016
 
 ## Synopsis
 
-Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.  The purpose of this project was to explore and analyze the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database to determine which types of hydro-meteorological events posed the greatest public health and economic cost.  **Tornados** initially emerged as the top driver of public health and economic problems; however, a subsequent analysis of events over time revealed a significant lack of data for the other leading event types for the period ranging from 1950 to approximately 1990.  As such, the analysis was based upon the data from 1990 to 2011.  From a public health perspective, **tornados** have generated the highest number of health incidents; however, **excessive heat** was responsible for the greatest number of weather & storm related fatalities.  From an economic standpoint, **winter storms** emerged as the most costly of the weather events.
+Storms and other severe weather events can cause both public health and economic problems for communities and municipalities. Many severe events can result in fatalities, injuries, and property damage, and preventing such outcomes to the extent possible is a key concern.  The purpose of this project was to explore and analyze the U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database to determine which types of hydro-meteorological events posed the greatest public health and economic cost.  **Tornados** initially emerged as the top driver of public health and economic problems; however, a subsequent analysis of events over time revealed a significant lack of data for the other leading event types for the period ranging from 1950 to approximately 1990.  **In fact, 96% of all incidents reported from 1950-1990 were tornado related.**  As such, the analysis was based upon the data from 1990 to 2011.  From a public health perspective, **tornados** have generated the highest number of health incidents; however, **excessive heat** was responsible for the greatest number of weather & storm related fatalities.  From an economic standpoint, **winter storms** emerged as the most costly of the weather events.
 
 ## Research Question
 The report seeks to address the following questions:
@@ -526,9 +526,11 @@ grid.arrange(t1, t2, t3, t4, t5, t6, ncol = 2, nrow = 3)
 ![](../figures/unnamed-chunk-22-1.png)<!-- -->
 The data evinces several interesting inferences.
 
-1. Data for the event types having the highest impact on health and economics, don't emerge until approximately 1990.
-2. Starting in 1990's, extreme heat emerges as a leading cause of fatalities.
-3. Winter storms seem to generate higher economic costs from 1990 forward.
+1. Starting in 1990's, extreme heat emerges as a leading cause of fatalities.
+2. Winter storms seem to generate higher economic costs from 1990 forward.
+3. Data for the event types having the highest impact on health and economics, don't emerge until approximately 1990.
+
+**In fact, of the 24,521 observations taken from 1950 until 1990, tornado related incidents comprise 96.5 percent (23,654) of all reports.**
 
 Given the stratification of the data over time, a closer look at the storm data from 1990 forward, might provide a more accurate assessment of the health and economic effects vis-a-vis storm events. 
 

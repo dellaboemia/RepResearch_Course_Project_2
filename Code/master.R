@@ -130,6 +130,12 @@ library(downloader)
     stormData1990 <- stormData[ which(stormData$YEAR >= "1990"),]
 ## ---- end
     
+## ---- distribution1990
+    incidents <- calcDistribution(stormData)
+    totalIncidents <- incidents[1]+incidents[2]+incidents[3]
+    pctTornado <- 100* incidents[2]/totalIncidents
+## ---- end
+    
 ## ---- top51990
     top5Fatalities1990  <- top5FatalitiesFunc(stormData1990)
     top5Injuries1990    <- top5InjuriesFunc(stormData1990)
